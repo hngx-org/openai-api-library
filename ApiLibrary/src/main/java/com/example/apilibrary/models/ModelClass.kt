@@ -3,6 +3,7 @@ package com.example.apilibrary.models
 import com.squareup.moshi.Json
 
 data class Prompt(
+    @Json(name = "history") val history : Array<String> = arrayOf("",""),
     @Json(name = "user_input") val user_input : String = ""
 )
 

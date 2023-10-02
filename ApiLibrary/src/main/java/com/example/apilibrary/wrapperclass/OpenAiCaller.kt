@@ -9,9 +9,9 @@ import retrofit2.Response
 
 class OpenAiCaller {
     companion object {
-        suspend fun generateResponse(userInput: String): Response<Completion> {
+        suspend fun generateResponse(userInput: String, savedHistory : Array<String>): Response<Completion> {
             val openAiClient = OpenAiClient.service
-            val response = openAiClient.callOpenApi(Prompt(user_input = userInput))
+            val response = openAiClient.callOpenApi(Prompt(user_input = userInput, history = savedHistory))
             return response
         }
     }
