@@ -38,8 +38,6 @@ dependencies {
     val retrofitVersion = "2.9.0"
     val moshiVersion = "1.13.0"
 
-    implementation("androidx.core:core-ktx:1.9.0")
-
     // retrofit and moshi
     implementation ("com.squareup.okhttp3:okhttp:4.11.0")
     implementation ("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -53,17 +51,16 @@ dependencies {
 
 }
 
-//afterEvaluate {
-//    publishing {
-//        publications {
-//            create<MavenPublication>("release") {
-//                from(components["release"])
-//
-//                groupId =
-//            }
-//        }
-//    }
-//}
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
 
-
-
+                groupId = "com.github.hngx-org"
+                artifactId = "hngx-openai-library"
+                version = "1.0"
+            }
+        }
+    }
+}
