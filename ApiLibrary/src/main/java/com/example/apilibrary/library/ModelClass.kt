@@ -1,9 +1,9 @@
-package com.example.apilibrary.models
+package com.example.apilibrary.library
 
 import com.squareup.moshi.Json
 
-data class Prompt(
-    @Json(name = "history") val history : Array<String> = arrayOf("",""),
+internal data class Prompt(
+    @Json(name = "history") val history : Array<String> = emptyArray(),
     @Json(name = "user_input") val user_input : String = ""
 )
 

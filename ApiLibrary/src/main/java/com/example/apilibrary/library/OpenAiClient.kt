@@ -1,6 +1,5 @@
-package com.example.apilibrary.networkinig
+package com.example.apilibrary.library
 
-import com.example.apilibrary.api.OpenAiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -9,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
-object OpenAiClient {
+internal object OpenAiClient {
 
     private val BASE_URL = "https://spitfire-interractions.onrender.com/"
 
