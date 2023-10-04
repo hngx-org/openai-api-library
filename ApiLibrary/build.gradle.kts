@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("maven-publish")
+    kotlin("plugin.serialization") version "1.9.0"
 }
 
 android {
@@ -34,21 +35,20 @@ android {
 }
 
 dependencies {
-
-    val retrofitVersion = "2.9.0"
-    val moshiVersion = "1.13.0"
-
-    // retrofit and moshi
-    implementation ("com.squareup.okhttp3:okhttp:4.11.0")
-    implementation ("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation ("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
-    implementation ("com.squareup.moshi:moshi:$moshiVersion")
-    implementation ("com.squareup.moshi:moshi-kotlin:$moshiVersion")
-    implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3")
+    val ktor_version = "2.3.4"
 
     // kotlin coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
+    // ktor dependencies
+    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-cio:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+    implementation("io.ktor:ktor-client-logging:$ktor_version")
+
+    // kotlin-lifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 }
 
 afterEvaluate {

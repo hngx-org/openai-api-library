@@ -1,33 +1,62 @@
 package com.example.apilibrary.library
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.concurrent.TimeUnit
+import android.util.Log
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.logging.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
 
-internal object OpenAiClient {
+private const val TAG = "OpenAiClient"
 
-    private val BASE_URL = "https://spitfire-interractions.onrender.com/"
+internal class OpenAiClient {
 
-    private val okhttpClient = OkHttpClient.Builder()
-        .readTimeout(3000, TimeUnit.MILLISECONDS)
-        .connectTimeout(2000, TimeUnit.MILLISECONDS)
-        .addInterceptor(MyInterceptor())
-        .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
-        .build()
+    val client = HttpClient(CIO) {
+        install(ContentNegotiation) {
+            json(Json{
+                prettyPrint = true
+                isLenient = true
+            })
+        }
 
-    private val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
+        install(Logging) {
+            logger = object : Logger {
+                override fun log(message: String) {
+                    Log.d(TAG, "Network Message, log: $message")
+                }
+            }
+            level=LogLevel.ALL
+        }
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .client(okhttpClient)
-        .build()
+        install(HttpTimeout) {
+            socketTimeoutMillis = 10_000
+            requestTimeoutMillis = 10_000
+            connectTimeoutMillis = 10_000
+        }
+    }
 
-    val service: OpenAiService = retrofit.create(OpenAiService::class.java)
+    suspend fun getUserChatResponse(userPrompt: String, userPromptChat : Array<String>, userId : String) : String {
+        val response : HttpResponse = client.post("https://spitfire-interractions.onrender.com/api/chat/completions/") {
+            header("Accept", "application/json")
+            header("Content-Type", "application/json")
+            header("Cookie", userId)
+            setBody(PromptChat(history = userPromptChat, user_input = userPrompt))
+        }
+        return response.body()
+    }
+
+    suspend fun getChatResponse(userPrompt: String, userId : String) : String {
+        val response : HttpResponse = client.post("https://spitfire-interractions.onrender.com/api/chat/") {
+            header("Accept", "application/json")
+            header("Content-Type", "application/json")
+            header("Cookie", userId)
+            setBody(Prompt(user_input = userPrompt))
+        }
+        return response.body()
+    }
 }

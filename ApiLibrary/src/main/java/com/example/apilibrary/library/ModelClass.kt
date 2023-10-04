@@ -1,21 +1,14 @@
 package com.example.apilibrary.library
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class PromptChat(
-    @Json(name = "history") val history : Array<String>,
-    @Json(name = "user_input") val user_input : String
+    val history : Array<String>,
+    val user_input : String
 )
 
+@Serializable
 internal data class Prompt(
-    @Json(name = "user_input") val user_input : String
+    val user_input : String
 )
-
-data class PromptChatCompletion(
-    @Json(name = "message") val message : String
-)
-
-data class PromptCompletion(
-    @Json(name = "message") val message : String
-)
-
