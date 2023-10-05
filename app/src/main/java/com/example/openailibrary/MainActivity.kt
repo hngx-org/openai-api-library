@@ -8,7 +8,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // You can do simple log tests here by adding a dependency to the Module...
-
+        // Run the test as proof that the implementation for the library works
     }
 }

@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class PromptChat(
-    val history : Array<String>,
+    val history : List<String>,
     val user_input : String
 )
 
