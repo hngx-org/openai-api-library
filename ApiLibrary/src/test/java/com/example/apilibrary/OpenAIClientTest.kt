@@ -16,7 +16,6 @@ class OpenAIClientTest {
     @Test
     fun getUserChatResponseTest() = runTest {
         flow {
-
            val res =  openAiClient.getUserChatResponse(
                 "what was my last question?",
                 listOf("user: Hello!",
