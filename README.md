@@ -16,7 +16,7 @@ To use this Library in your Project, you will need to follow carefully the liste
 - Second, you will need to add these listed dependencies in your apps build.gradle.kts file. If you are using Groovy for your scripts, then you can solve this by simply using single quotes and removing the brackets.
 ```
 dependencies {
-    implementation("com.github.hngx-org:openai-api-library:0.1.3")
+    implementation("com.github.hngx-org:openai-api-library:0.1.4")
 }
 ```
 
